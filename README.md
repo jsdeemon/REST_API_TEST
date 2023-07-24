@@ -24,3 +24,7 @@ To let print something withng testing
 ```bash
 $ pytest -v -s
 ```
+To run one task:
+```bash
+$ pytest -v -s ./test_todo_api.py::test_can_list_tasks
+```
