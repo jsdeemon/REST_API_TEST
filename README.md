@@ -27,4 +27,5 @@ $ pytest -v -s
 To run one task:
 ```bash
 $ pytest -v -s ./test_todo_api.py::test_can_list_tasks
+$ pytest -v -s ./test_todo_api.py::test_can_delete_task
 ```

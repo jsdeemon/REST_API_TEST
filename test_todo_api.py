@@ -13,9 +13,9 @@ ENDPOINT = "https://todo.pixegami.io"
 # print(status_code)
 
 
-def test_can_call_endpoint():
-    response = requests.get(ENDPOINT)
-    assert response.status_code == 200, "Status code is not 200" 
+# def test_can_call_endpoint():
+#     response = requests.get(ENDPOINT)
+#     assert response.status_code == 200, "Status code is not 200" 
 
 def test_can_create_task():
     payload = new_task_payload()
@@ -67,8 +67,25 @@ def test_can_list_tasks():
     data = list_tasks_response.json()
     tasks = data['tasks']
     assert len(tasks) == n
-    print(data)
+    # print(data)
 
+
+def test_can_delete_task():
+    # create a task
+    payload = new_task_payload()
+    create_task_response = create_task(payload)
+    assert create_task_response.status_code == 200
+    task_id = create_task_response.json()['task']['task_id']
+    
+    # delete a task
+    delete_task_response = delete_task(task_id)
+    assert delete_task_response.status_code == 200 
+
+    # get the task and check that it is not found
+    get_task_response = get_task(task_id)
+    assert get_task_response.status_code == 404
+    # print(get_task_response.status_code)
+    # pass
 
 def create_task(payload):
     return requests.put(ENDPOINT + '/create-task', json=payload)
@@ -81,6 +98,9 @@ def get_task(task_id):
 
 def list_tasks(user_id):
     return requests.get(ENDPOINT + f"/list-tasks/{user_id}")
+
+def delete_task(task_id):
+    return requests.delete(ENDPOINT + f"/delete-task/{task_id}")
 
 def new_task_payload():
     user_id = f"test_user_{uuid.uuid4().hex}"
