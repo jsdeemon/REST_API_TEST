@@ -1,17 +1,4 @@
-import requests
-import uuid 
-
-ENDPOINT = "https://todo.pixegami.io" 
-
-# response = requests.get(ENDPOINT)
-# print(response) 
-
-# data = response.json() 
-# print(data) 
-
-# status_code = response.status_code 
-# print(status_code)
-
+from helpers.funcs import new_task_payload, create_task, get_task, update_task, list_tasks, delete_task
 
 # def test_can_call_endpoint():
 #     response = requests.get(ENDPOINT)
@@ -86,29 +73,3 @@ def test_can_delete_task():
     assert get_task_response.status_code == 404
     # print(get_task_response.status_code)
     # pass
-
-def create_task(payload):
-    return requests.put(ENDPOINT + '/create-task', json=payload)
-
-def update_task(payload):
-    return requests.put(ENDPOINT + '/update-task', json=payload)
-
-def get_task(task_id):
-    return requests.get(ENDPOINT + f'/get-task/{task_id}') 
-
-def list_tasks(user_id):
-    return requests.get(ENDPOINT + f"/list-tasks/{user_id}")
-
-def delete_task(task_id):
-    return requests.delete(ENDPOINT + f"/delete-task/{task_id}")
-
-def new_task_payload():
-    user_id = f"test_user_{uuid.uuid4().hex}"
-    content = f"test_content_{uuid.uuid4().hex}"
-    return {
-         "content": content,
-          "user_id": user_id,
-          "is_done": False
-    }
-
-    
